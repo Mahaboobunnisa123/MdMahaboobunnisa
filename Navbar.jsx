@@ -1,0 +1,109 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { navLinks, personalInfo } from "../constants";
+import { close, menu } from "../assets";
+
+const Navbar = () => {
+  const [active, setActive] = useState("");
+  const [toggle, setToggle] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      if (scrollTop > 100) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <nav
+      className={`w-full flex items-center py-5 fixed top-0 z-20 ${
+        scrolled ? "bg-primary/80 backdrop-blur-md" : "bg-transparent"
+      } transition-all duration-300`}
+    >
+      <div className='w-full flex justify-between items-center max-w-7xl mx-auto px-6'>
+        <Link
+          to='/'
+          className='flex items-center gap-2'
+          onClick={() => {
+            setActive("");
+            window.scrollTo(0, 0);
+          }}
+        >
+          <motion.div
+            whileHover={{ scale: 1.1, rotate: 360 }}
+            transition={{ duration: 0.5 }}
+            className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center"
+          >
+            <span className="text-white font-bold text-lg">D</span>
+          </motion.div>
+          <p className='text-white text-[18px] font-bold cursor-pointer flex '>
+            {personalInfo.name.split(' ')[0]} &nbsp;
+            <span className='sm:block hidden'>| Data Scientist</span>
+          </p>
+        </Link>
+
+        <ul className='list-none hidden sm:flex flex-row gap-10'>
+          {navLinks.map((nav) => (
+            <li
+              key={nav.id}
+              className={`${
+                active === nav.title ? "text-white" : "text-secondary"
+              } hover:text-white text-[18px] font-medium cursor-pointer transition-colors duration-200`}
+              onClick={() => setActive(nav.title)}
+            >
+              <a href={`#${nav.id}`}>{nav.title}</a>
+            </li>
+          ))}
+        </ul>
+
+        <div className='sm:hidden flex flex-1 justify-end items-center'>
+          <div
+            className={`w-6 h-6 cursor-pointer`}
+            onClick={() => setToggle(!toggle)}
+          >
+            {toggle ? (
+              <div className="w-6 h-6 text-white">✕</div>
+            ) : (
+              <div className="w-6 h-6 text-white">☰</div>
+            )}
+          </div>
+
+          <div
+            className={`${
+              !toggle ? "hidden" : "flex"
+            } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
+          >
+            <ul className='list-none flex justify-end items-start flex-1 flex-col gap-4'>
+              {navLinks.map((nav) => (
+                <li
+                  key={nav.id}
+                  className={`font-poppins font-medium cursor-pointer text-[16px] ${
+                    active === nav.title ? "text-white" : "text-secondary"
+                  }`}
+                  onClick={() => {
+                    setToggle(!toggle);
+                    setActive(nav.title);
+                  }}
+                >
+                  <a href={`#${nav.id}`}>{nav.title}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
