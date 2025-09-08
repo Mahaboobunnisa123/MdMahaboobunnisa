@@ -1,11 +1,11 @@
 // Personal Information
 export const personalInfo = {
-  name: "Your Name",
-  tagline: "Data Science & AI/ML Expert | Transforming Data into Insights",
-  email: "gmailaddress",
+  name: "Md Mahaboobunnisa",
+  tagline: "Data Science | AI | ML | Analytics Enthusias",
+  email: "mdshabbi885@gmail.com",
   resume: "/resume.pdf", // Place your resume in the public folder
   linkedin: "https://linkedin.com/in/your-profile",
-  github: "https://github.com/your-username",
+  github: "https://github.com/Mahaboobunnisa123",
   bio: "Passionate data scientist and AI/ML engineer with expertise in developing innovative solutions using cutting-edge technologies. I specialize in machine learning, deep learning, and data analytics to solve complex real-world problems. With a strong foundation in Python, TensorFlow, and cloud technologies, I transform raw data into actionable insights that drive business decisions."
 };
 
